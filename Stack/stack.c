@@ -1,20 +1,50 @@
+#include <stdlib.h>
 #include "stack.h"
 
-struct Stack
+struct stack
 {
-    int *value;
-    struct Stack *next;
+    int value;
+    struct stack *next;
 };
 
-void init_stack()
+Stack init_stack()
 {
     return NULL;
 }
 
-int push(Stack)
+int is_empty(Stack *stck)
 {
+    if (stck == NULL)
+        return 1;
+    else
+        return 0;
+}
+
+int push(Stack *stck, int val)
+{
+    Stack new = (Stack)malloc(sizeof(Stack));
+    // Should verify if the stck exists or
+    if (new == NULL)
+        return 0;
+
+    new->value = val;
+    new->next = *stck;
+    *stck = new;
+
+    return 1;
 }
 
 int pop(Stack *stck)
 {
+    int value;
+
+    if (is_empty(stck))
+        return 0;
+
+    Stack aux = *stck;
+    value = aux->value;
+    *stck = aux->next;
+    free(aux);
+
+    return value;
 }
